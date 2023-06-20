@@ -174,7 +174,6 @@ GEM
 
 PLATFORMS
   arm64-darwin
-  universal-java-1.8
   universal-java-11
   x64-mingw-ucrt
   x64-mingw32

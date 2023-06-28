@@ -8,7 +8,8 @@ require "ruby_lsp/check_docs"
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"
   t.libs << "lib"
-  t.test_files = FileList["test/**/*_test.rb", "lib/ruby_indexer/test/**/*_test.rb"]
+  t.test_files = FileList["test/**/*_test.rb",
+    "lib/ruby_indexer/test/**/*_test.rb"].exclude("test/fixtures/yarp/**/*.rb")
 end
 
 RDoc::Task.new do |rdoc|

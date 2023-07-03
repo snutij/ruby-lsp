@@ -51,7 +51,9 @@ module RubyLsp
         scanner = @document.create_scanner
         start_index = scanner.find_char_position(source_range[:start])
         end_index = scanner.find_char_position(source_range[:end])
-        extracted_source = T.must(@document.source[start_index...end_index])
+        extracted_source = @document.source[start_index...end_index]
+
+        return Error::InvalidTargetRange if extracted_source.nil?
 
         # Find the closest statements node, so that we place the refactor in a valid position
         closest_statements, parent_statements = @document
@@ -105,7 +107,11 @@ module RubyLsp
             end: { line: target_line, character: indentation },
           }
 
-          variable_source = if T.must(lines[target_line]).strip.empty?
+          content_target_line = lines[target_line]
+
+          return Error::InvalidTargetRange if content_target_line.nil?
+
+          variable_source = if content_target_line.strip.empty?
             "\n#{" " * indentation}#{NEW_VARIABLE_NAME} = #{extracted_source}"
           else
             "#{NEW_VARIABLE_NAME} = #{extracted_source}\n#{" " * indentation}"

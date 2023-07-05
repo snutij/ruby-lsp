@@ -13,16 +13,21 @@ class DiagnosticsExpectationsTest < ExpectationsTestRunner
     result = T.let(nil, T.nilable(T::Array[RubyLsp::Requests::Support::RuboCopDiagnostic]))
 
     stdout, _ = capture_io do
-      result = T.cast(
-        RubyLsp::Requests::Diagnostics.new(document).run,
-        T::Array[RubyLsp::Requests::Support::RuboCopDiagnostic],
-      )
+      result =
+        RubyLsp::Requests::Diagnostics.new(document).run
     end
 
     assert_empty(stdout)
 
+    return [] unless result
+
     # On Windows, RuboCop will complain that the file is missing a carriage return at the end. We need to ignore these
-    T.must(result).map(&:to_lsp_diagnostic).reject { |diagnostic| diagnostic.code == "Layout/EndOfLine" }
+    T.cast(
+      result,
+      T::Array[RubyLsp::Requests::Support::RuboCopDiagnostic],
+    ).map(&:to_lsp_diagnostic).reject do |diagnostic|
+      diagnostic.code == "Layout/EndOfLine"
+    end
   end
 
   def assert_expectations(source, expected)

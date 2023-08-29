@@ -4,10 +4,9 @@
 class ExpectationsTestRunner < Minitest::Test
   TEST_EXP_DIR = "test/expectations"
   TEST_FIXTURES_DIR = "test/fixtures"
-  TEST_YARP_DIR = "#{TEST_FIXTURES_DIR}/yarp"
 
-  TEST_RUBY_LSP_FIXTURES = Dir.glob(["#{TEST_FIXTURES_DIR}/*.rb", "#{TEST_FIXTURES_DIR}/rails_app/**/*.rb"])
-  TEST_YARP_FIXTURES = Dir.glob("#{TEST_YARP_DIR}/test/fixtures/**/*.txt")
+  TEST_RUBY_LSP_FIXTURES = File.join(TEST_FIXTURES_DIR, "*.rb")
+  TEST_YARP_FIXTURES = File.join(TEST_FIXTURES_DIR, "yarp/test/yarp/fixtures/**", "*.txt")
 
 
   class << self
@@ -53,7 +52,7 @@ class ExpectationsTestRunner < Minitest::Test
         include ExpectationsRunnerMethods
       RB
 
-      TEST_RUBY_LSP_FIXTURES.each do |path|
+      Dir.glob(TEST_RUBY_LSP_FIXTURES).each do |path|
         test_name = File.basename(path, ".rb")
 
         expectations_dir = File.join(TEST_EXP_DIR, expectation_suffix)
@@ -96,7 +95,7 @@ class ExpectationsTestRunner < Minitest::Test
         end
       end
 
-      TEST_YARP_FIXTURES.each do |path|
+      Dir.glob(TEST_YARP_FIXTURES).each do |path|
         class_eval(<<~RB, __FILE__, __LINE__ + 1)
           def test_#{expectation_suffix}__#{uniq_name_from_path(path)}__does_not_raise
             @_path = "#{path}"
@@ -110,8 +109,8 @@ class ExpectationsTestRunner < Minitest::Test
     end
 
     # Ensure that the test name include path context to avoid duplicate
-    # from test/fixtures/yarp/test/fixtures/unparser/corpus/semantic/and.txt
-    # to test_fixtures_yarp_test_fixtures_unparser_corpus_semantic_and
+    # from test/fixtures/yarp/test/yarp/fixtures/unparser/corpus/semantic/and.txt
+    # to test_fixtures_yarp_test_yarp_fixtures_unparser_corpus_semantic_and
     def uniq_name_from_path(path)
       path.gsub("/", "_").gsub('.txt', '')
     end

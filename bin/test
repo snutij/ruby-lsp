@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-YARP_FIXTURES_DIR=test/fixtures/yarp/test/fixtures
+YARP_FIXTURES_DIR=test/fixtures/yarp/test/yarp/fixtures
 
 if [ ! -d "$YARP_FIXTURES_DIR" ]; then
     echo "$YARP_FIXTURES_DIR does not exist."

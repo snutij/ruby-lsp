@@ -9,12 +9,12 @@ NON_WINDOWS_PLATFORMS = [:ruby] # C Ruby (MRI), Rubinius or TruffleRuby, but NOT
 
 group :development do
   gem "bundler", "~> 2.4.2"
-  gem "debug", "~> 1.8", require: false
+  gem "debug", "~> 1.9", require: false
   gem "minitest", "~> 5.20"
   gem "minitest-reporters", "~> 1.6"
   gem "mocha", "~> 2.1"
   gem "rake", "~> 13.1"
-  gem "rubocop", "~> 1.57"
+  gem "rubocop", "~> 1.59"
   gem "rubocop-shopify", "~> 2.14", require: false
   gem "rubocop-minitest", "~> 0.33.0", require: false
   gem "rubocop-rake", "~> 0.6.0", require: false

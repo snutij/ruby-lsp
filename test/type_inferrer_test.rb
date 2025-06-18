@@ -322,7 +322,7 @@ module RubyLsp
     end
 
     def test_infer_regexp_literal
-      node_context = index_and_locate(<<~RUBY, { line: 0, character: 5 })
+      node_context = index_and_locate(<<~RUBY, { line: 0, character: 6 })
         /abc/.match("abc")
       RUBY
 

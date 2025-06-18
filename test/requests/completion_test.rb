@@ -1395,7 +1395,7 @@ class CompletionTest < Minitest::Test
     with_server(source, stub_no_typechecker: true) do |server, uri|
       server.process_message(id: 1, method: "textDocument/completion", params: {
         textDocument: { uri: uri },
-        position: { line: 10, character: 4 },
+        position: { line: 10, character: 5 },
       })
 
       result = server.pop_response.response

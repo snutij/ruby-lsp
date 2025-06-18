@@ -46,7 +46,7 @@ module RubyLsp
           loc = candidate.location
           loc_start_offset = loc.cached_start_code_units_offset(code_units_cache)
           loc_end_offset = loc.cached_end_code_units_offset(code_units_cache)
-          next unless (loc_start_offset...loc_end_offset).cover?(char_position)
+          next unless (loc_start_offset..loc_end_offset).cover?(char_position)
 
           # If the node's start character is already past the position, then we should've found the closest node
           # already
